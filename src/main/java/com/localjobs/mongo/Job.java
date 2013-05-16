@@ -17,6 +17,10 @@ public class Job {
 
 	private String formattedAddress;
 
+	private Object longitude;
+
+	private Object latitude;
+
 	public Job() {
 		// TODO Auto-generated constructor stub
 	}
@@ -28,6 +32,9 @@ public class Job {
 		this.companyName = ((BasicDBObject) jobObj.get("company"))
 									.getString("companyName");
 		this.jobTitle = jobObj.getString("jobTitle");
+		BasicDBList locationList = (BasicDBList)jobObj.get("location");
+		this.longitude = locationList.get(0);
+		this.latitude = locationList.get(1);
 		this.formattedAddress = jobObj.getString("formattedAddress");
 		this.skills = ((BasicDBList) jobObj.get("skills")).toArray(new String[0]);
 	}
@@ -70,6 +77,20 @@ public class Job {
 
 	public void setFormattedAddress(String formattedAddress) {
 		this.formattedAddress = formattedAddress;
+	}
+	public void setLongitude(Object longitude) {
+		this.longitude = longitude;
+	}
+	
+	public Object getLongitude() {
+		return longitude;
+	}
+	
+	public void setLatitude(Object latitude) {
+		this.latitude = latitude;
+	}
+	public Object getLatitude() {
+		return latitude;
 	}
 
 	@Override
