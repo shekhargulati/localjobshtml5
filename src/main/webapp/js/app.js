@@ -76,7 +76,7 @@
 									'not been defined.');
 					}
 				},
-					{ timeout: 45000 ,maximumAge: 75000 }
+					{ timeout: 45000 }
 				
 				);
 				
