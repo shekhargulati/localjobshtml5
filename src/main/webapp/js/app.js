@@ -34,7 +34,7 @@
 				var self = this;
 				
 				  var mapOptions = {
-				    zoom: 8,
+				    zoom: 4,
 				    center: new google.maps.LatLng(-34.397, 150.644),
 				    mapTypeId: google.maps.MapTypeId.ROADMAP
 				  };
@@ -47,8 +47,6 @@
 			    	var latitude = position.coords.latitude;
 			    	console.log('longitude .. '+longitude);
 			    	console.log('latitude .. '+latitude);
-			    	
-			    	alert('longitude : '+longitude + ' , latitude : '+latitude);
 			    	
 			    	$("#jobSearchForm").unmask();
 			    	self.plotUserLocation(new google.maps.LatLng(latitude, longitude),map);
@@ -91,27 +89,45 @@
 				}); 
 				marker.setMap(map);
 				map.setCenter(latLng);
-				map.setZoom(6);
+				map.setZoom(4);
 			},
 
 			renderResults : function(results,self,map){
+				var infoWindow = new google.maps.InfoWindow();
 				_.each(results,function(result){
-					self.renderJob(result,map);
+					self.renderJob(result,map , infoWindow);
 				});
 				
 			},
 			
-			renderJob : function(result , map){
+			renderJob : function(result , map , infoWindow){
 				result.marker = new google.maps.Marker({
 					position: new google.maps.LatLng(result.latitude, result.longitude),
 					icon: 'http://icons.iconarchive.com/icons/mad-science/olive/32/Martinis-Briefcase-icon.png', 
 					animation: google.maps.Animation.DROP,
 					title: result.jobTitle,
-//					html: createInfoContent(result)
+					html: this.jobInfo(result)
+				});
+				
+				google.maps.event.addListener(result.marker, 'click', function() {
+					infoWindow.setContent(this.html);
+					infoWindow.open(map, this); 
 				});
 			
 				result.marker.setMap(map);
 			},
+			
+		 jobInfo : function(job) {
+			var text = '';
+			text += '<div class="job_info">';
+			
+			
+			text += '<h3>' + job['jobTitle'] + '</h3>';
+			text += '<p>' + job['formattedAddress'] + '</p>';
+			text += '<p>' + job['companyName'] + '</p>';
+			text += '<p>' + job['distance'] + ' KM</p>';
+			return text;
+		}
 			
 			
 
