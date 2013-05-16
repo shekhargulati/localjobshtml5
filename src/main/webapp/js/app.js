@@ -121,10 +121,10 @@
 			var text = '';
 			text += '<div class="job_info">';
 			
-			
 			text += '<h3>' + job['jobTitle'] + '</h3>';
 			text += '<p>' + job['formattedAddress'] + '</p>';
 			text += '<p>' + job['companyName'] + '</p>';
+			text += '<p>' + job['skills'] + '</p>';
 			text += '<p>' + job['distance'] + ' KM</p>';
 			return text;
 		}
